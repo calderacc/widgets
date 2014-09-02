@@ -33,13 +33,14 @@ window.onload = function()
 
                     var dateTime = new Date(rides[city].dateTime);
 
-                    var formattedDateTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
-                        (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr, ' +
-                        (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
+                    var formattedDate = (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
                         (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
                         (dateTime.getFullYear());
 
-                    marker.bindPopup('<b>N&auml;chste Tour</b><br />' + formattedDateTime).openPopup();
+                    var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
+                            (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
+
+                    marker.bindPopup('<b>N&auml;chste Tour</b><br />Datum: ' + formattedDate + '<br />Uhrzeit: ' + formattedTime + '<br />Treffpunkt: ' + rides[city].location).openPopup();
                 }
             }
         }
