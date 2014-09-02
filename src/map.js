@@ -13,6 +13,8 @@ Map.prototype.mapOptions = null;
 
 Map.prototype.map = null;
 Map.prototype.marker = null;
+Map.prototype.tileLayer = null;
+Map.prototype.ride;
 
 Map.prototype.loadStylesheets = function()
 {
@@ -47,13 +49,8 @@ Map.prototype.loadRide = function()
 
 Map.prototype.processRide = function(data)
 {
-    this.map = L.map(this.mapIdentifier, { zoomControl: zoomControl });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 18,
-        detectRetina: true
-    }).addTo(this.map);
+    this.createMap();
+    this.createTileLayer();
 
     var rides = data.rides;
 
@@ -93,6 +90,20 @@ Map.prototype.formatDate = function(dateTime)
     return (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
         (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
         (dateTime.getFullYear());
+};
+
+Map.prototype.createMap = function()
+{
+    this.map = L.map(this.mapIdentifier, { zoomControl: zoomControl });
+};
+
+Map.prototype.createTileLayer = function()
+{
+    this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+        detectRetina: true
+    }).addTo(this.map);
 };
 
 Map.prototype.createMarker = function(locationLatLng)
