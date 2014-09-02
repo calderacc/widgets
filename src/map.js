@@ -5,7 +5,7 @@ window.onload = function()
     $.ajax({
         type: 'GET',
         async: false,
-        url: 'https://criticalmass.cm/app_dev.php/api/ride/getcurrent',
+        url: 'https://criticalmass.in/api/ride/getcurrent',
         cache: false,
         context: this,
         success: function(data)
