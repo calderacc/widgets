@@ -24,9 +24,9 @@ window.onload = function()
                         (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 
                     var textContent = '<strong id="criticalmassin-next-tour-headline">N&auml;chste Tour:</strong>';
-                    textContent += '<span id="criticalmassin-next-tour-date"></span>';
-                    textContent += '<span id="criticalmassin-next-tour-time"></span>';
-                    textContent += '<span id="criticalmassin-next-tour-location"></span>';
+                    textContent += '<span id="criticalmassin-next-tour-date">' + formattedDate + '</span>';
+                    textContent += '<span id="criticalmassin-next-tour-time">' + formattedTime + '</span>';
+                    textContent += '<span id="criticalmassin-next-tour-location">' + rides[city].location + '</span>';
 
                     $('#criticalmassin-widget-text-container').html(textContent);
                 }
