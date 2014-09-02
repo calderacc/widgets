@@ -29,9 +29,18 @@ window.onload = function()
                 {
                     var url = 'https://criticalmass.in/' + citySlug;
 
-                    var mapCenter = L.latLng(rides[city].latitude, rides[city].longitude);
+                    if (mapCenterLatitude && mapCenterLongitude)
+                    {
+                        var mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
+                    }
+                    else
+                    {
+                        var mapCenter = L.latLng(rides[city].latitude, rides[city].longitude);
+                    }
 
-                    var marker = marker = L.marker(mapCenter).addTo(map);
+                    var locationLatLng = L.latLng(rides[city].latitude, rides[city].longitude);
+
+                    var marker = marker = L.marker(locationLatLng).addTo(map);
 
                     map.setView(mapCenter, zoomLevel);
 
