@@ -3,6 +3,7 @@ window.onload = function()
     $('#criticalmassin-widget-map-container').width(width);
     $('#criticalmassin-widget-map-container').height(height);
 
+    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
 
     $.ajax({
         type: 'GET',
