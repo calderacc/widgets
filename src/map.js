@@ -1,6 +1,6 @@
 window.onload = function()
 {
-    $('#criticalmassin-widget-map-container').append('<div id="criticalmassin-widget-map" style="height: 250px; width: 250px;"></div>');
+    $('#criticalmassin-widget-map-container').append('<div id="criticalmassin-widget-map" style="width: ' + width + '; height: ' + height + ';"></div>');
 
     var map = L.map('criticalmassin-widget-map');
     map.setView([51.505, -0.09], 13);
