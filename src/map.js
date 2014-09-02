@@ -14,7 +14,7 @@ window.onload = function()
         context: this,
         success: function(data)
         {
-            var map = L.map('criticalmassin-widget-map-container');
+            var map = L.map('criticalmassin-widget-map-container', { zoomControl: zoomControl });
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -32,7 +32,7 @@ window.onload = function()
 
                     var marker = marker = L.marker(mapCenter).addTo(map);
 
-                    map.setView(mapCenter, 13);
+                    map.setView(mapCenter, zoomLevel);
 
                     var dateTime = new Date(rides[city].dateTime);
 
