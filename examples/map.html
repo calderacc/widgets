@@ -3,22 +3,20 @@
         <title>Map Widget Example</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+        <link rel="stylesheet" type="text/css" href="../src/css/map.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     </head>
     <body>
-        <script>
-            var width = '250px';
-            var height = '250px';
-            var citySlug = 'berlin';
-
-            var mapCenterLatitude = 53;
-            var mapCenterLongitude = 9;
-            var zoomLevel = 13;
-
-            var zoomControl = false;
-
-            var showPopup = true;
-        </script>
+    <div id="criticalmassin-widget-map-container"></div>
         <script src="../src/map.js"></script>
-        <div id="criticalmassin-widget-map-container"></div>
+        <script>
+            var mapOptions = {
+                width: '500px',
+                height: '500px',
+                citySlug: 'berlin'
+            };
+
+            var map = new Map('criticalmassin-widget-map-container', mapOptions);</script>
+
     </body>
 </html>

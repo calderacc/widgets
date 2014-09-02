@@ -14,7 +14,17 @@ Map.prototype.mapOptions = null;
 Map.prototype.map = null;
 Map.prototype.marker = null;
 Map.prototype.tileLayer = null;
-Map.prototype.ride;
+Map.prototype.ride = null;
+
+Map.prototype.getOptionValue = function(optionKey)
+{
+    return this.mapOptions[optionKey];
+};
+
+Map.prototype.hasOptionValue = function(optionKey)
+{
+    return this.mapOptions[optionKey] !== undefined;
+};
 
 Map.prototype.loadStylesheets = function()
 {
@@ -28,8 +38,8 @@ Map.prototype.setMapWidthHeight = function()
 {
     var mapContainer = $('#' + this.mapIdentifier);
 
-    mapContainer.width(width);
-    mapContainer.height(height);
+    mapContainer.width(this.getOptionValue('width'));
+    mapContainer.height(this.getOptionValue('height'));
 };
 
 Map.prototype.loadRide = function()
@@ -56,7 +66,7 @@ Map.prototype.processRide = function(data)
 
     for (var city in rides)
     {
-        if (city == citySlug)
+        if (city == this.getOptionValue('citySlug'))
         {
             this.displayRide(rides[city]);
         }
@@ -67,9 +77,9 @@ Map.prototype.getMapLatLng = function()
 {
     var mapLatLng;
 
-    if (window.mapCenterLatitude !== undefined && window.mapCenterLongitude !== undefined)
+    if (this.hasOptionValue('mapCenterLatitude') && this.hasOptionValue('mapCenterLongitude'))
     {
-        mapLatLng = L.latLng(mapCenterLatitude, mapCenterLongitude);
+        mapLatLng = L.latLng(this.getOptionValue('mapCenterLatitude'), this.getOptionValue('mapCenterLongitude'));
     }
     else
     {
@@ -94,7 +104,10 @@ Map.prototype.formatDate = function(dateTime)
 
 Map.prototype.createMap = function()
 {
-    this.map = L.map(this.mapIdentifier, { zoomControl: zoomControl });
+    var mapOptions = [];
+    mapOptions['zoomControl'] = this.hasOptionValue('zoomControl') ? this.getOptionValue('zoomControl') : true;
+
+    this.map = L.map(this.mapIdentifier, mapOptions);
 };
 
 Map.prototype.createTileLayer = function()
@@ -113,7 +126,7 @@ Map.prototype.createMarker = function(locationLatLng)
 
 Map.prototype.createPopup = function(dateTime, location)
 {
-    var url = 'https://criticalmass.in/' + citySlug;
+    var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug');
 
     var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
     popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + this.formatDate(dateTime) + '</span>';
@@ -122,7 +135,7 @@ Map.prototype.createPopup = function(dateTime, location)
 
     this.marker.bindPopup(popupContent);
 
-    if (showPopup)
+    if (this.hasOptionValue('showPopup') ? this.getOptionValue('showPopup') : true)
     {
         this.marker.openPopup();
     }
@@ -134,6 +147,8 @@ Map.prototype.displayRide = function(ride)
 
     var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
     var mapLatLng = this.getMapLatLng();
+    var zoomLevel = this.hasOptionValue('zoomLevel') ? this.getOptionValue('zoomLevel') : 13;
+
     this.map.setView(mapLatLng, zoomLevel);
 
     var dateTime = new Date(this.ride.dateTime);
