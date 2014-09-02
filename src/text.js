@@ -1,5 +1,7 @@
 window.onload = function()
 {
+    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/text.css" />');
+
     $.ajax({
         type: 'GET',
         async: false,
