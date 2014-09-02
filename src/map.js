@@ -1,11 +1,26 @@
-window.onload = function()
+Map = function(mapIdentifier, mapOptions)
+{
+    this.mapIdentifier = mapIdentifier;
+    this.mapOptions = mapOptions;
+};
+
+Map.prototype.mapIdentifier = null;
+Map.prototype.mapOptions = null;
+
+Map.prototype.loadStylesheets = function()
 {
     $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
     $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
+};
 
+Map.prototype.setMapWidthHeight = function()
+{
     $('#criticalmassin-widget-map-container').width(width);
     $('#criticalmassin-widget-map-container').height(height);
+};
 
+Map.prototype.loadRide = function()
+{
     $.ajax({
         type: 'GET',
         async: false,
@@ -30,7 +45,8 @@ window.onload = function()
                 {
                     var url = 'https://criticalmass.in/' + citySlug;
 
-                    if (mapCenterLatitude && mapCenterLongitude)
+
+                    if (window.mapCenterLatitude !== undefined && window.mapCenterLongitude !== undefined)
                     {
                         var mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
                     }
@@ -52,7 +68,7 @@ window.onload = function()
                         (dateTime.getFullYear());
 
                     var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
-                            (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
+                        (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 
                     var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
                     popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + formattedDate + '</span>';
