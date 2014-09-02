@@ -16,6 +16,8 @@ window.onload = function()
             {
                 if (city == citySlug)
                 {
+                    var url = 'https://criticalmass.in/' + citySlug;
+
                     var dateTime = new Date(rides[city].dateTime);
 
                     var formattedDate = (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
@@ -25,7 +27,7 @@ window.onload = function()
                     var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
                         (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 
-                    var textContent = '<strong id="criticalmassin-next-tour-headline">N&auml;chste Tour:</strong>';
+                    var textContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
                     textContent += '<span id="criticalmassin-next-tour-date">' + formattedDate + '</span>';
                     textContent += '<span id="criticalmassin-next-tour-time">' + formattedTime + '</span>';
                     textContent += '<span id="criticalmassin-next-tour-location">' + rides[city].location + '</span>';
