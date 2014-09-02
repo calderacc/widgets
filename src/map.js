@@ -27,6 +27,8 @@ window.onload = function()
             {
                 if (city == citySlug)
                 {
+                    var url = 'https://criticalmass.in/' + citySlug;
+
                     var mapCenter = L.latLng(rides[city].latitude, rides[city].longitude);
 
                     var marker = marker = L.marker(mapCenter).addTo(map);
@@ -42,7 +44,10 @@ window.onload = function()
                     var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
                             (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 
-                    var popupContent = '<b>N&auml;chste Tour</b><br />Datum: ' + formattedDate + '<br />Uhrzeit: ' + formattedTime + '<br />Treffpunkt: ' + rides[city].location;
+                    var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
+                    popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + formattedDate + '</span>';
+                    popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + formattedTime + '</span>';
+                    popupContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + rides[city].location + '</span>';
 
                     marker.bindPopup(popupContent);
 
