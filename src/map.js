@@ -75,16 +75,9 @@ Map.prototype.displayRide = function(data)
 
             var dateTime = new Date(rides[city].dateTime);
 
-            var formattedDate = (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
-                (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
-                (dateTime.getFullYear());
-
-            var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
-                (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
-
             var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
-            popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + formattedDate + '</span>';
-            popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + formattedTime + '</span>';
+            popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + this.formatDate(dateTime) + '</span>';
+            popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + this.formatTime(dateTime) + '</span>';
             popupContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + rides[city].location + '</span>';
 
             marker.bindPopup(popupContent);
@@ -95,4 +88,17 @@ Map.prototype.displayRide = function(data)
             }
         }
     }
+};
+
+Map.prototype.formatTime = function(dateTime)
+{
+    return (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
+        (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
+};
+
+Map.prototype.formatDate = function(dateTime)
+{
+    return (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
+        (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
+        (dateTime.getFullYear());
 };
