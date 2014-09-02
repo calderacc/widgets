@@ -1,6 +1,10 @@
+
+
 window.onload = function()
 {
-    $('#criticalmassin-widget-map-container').append('<div id="criticalmassin-widget-map" style="width: ' + width + '; height: ' + height + ';"></div>');
+    $('#criticalmassin-widget-map-container').width(width);
+    $('#criticalmassin-widget-map-container').height(height);
+
 
     $.ajax({
         type: 'GET',
@@ -10,7 +14,7 @@ window.onload = function()
         context: this,
         success: function(data)
         {
-            var map = L.map('criticalmassin-widget-map');
+            var map = L.map('criticalmassin-widget-map-container');
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
