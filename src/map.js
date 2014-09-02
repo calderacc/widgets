@@ -11,10 +11,15 @@ Map = function(mapIdentifier, mapOptions)
 Map.prototype.mapIdentifier = null;
 Map.prototype.mapOptions = null;
 
+Map.prototype.map = null;
+Map.prototype.marker = null;
+
 Map.prototype.loadStylesheets = function()
 {
-    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
-    $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
+    var head = $('head');
+
+    head.append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
+    head.append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
 };
 
 Map.prototype.setMapWidthHeight = function()
@@ -35,20 +40,20 @@ Map.prototype.loadRide = function()
         context: this,
         success: function(data)
         {
-            this.displayRide(data);
+            this.processRide(data);
         }
     });
 };
 
-Map.prototype.displayRide = function(data)
+Map.prototype.processRide = function(data)
 {
-    var map = L.map(this.mapIdentifier, { zoomControl: zoomControl });
+    this.map = L.map(this.mapIdentifier, { zoomControl: zoomControl });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 18,
         detectRetina: true
-    }).addTo(map);
+    }).addTo(this.map);
 
     var rides = data.rides;
 
@@ -56,38 +61,25 @@ Map.prototype.displayRide = function(data)
     {
         if (city == citySlug)
         {
-            var url = 'https://criticalmass.in/' + citySlug;
-
-            if (window.mapCenterLatitude !== undefined && window.mapCenterLongitude !== undefined)
-            {
-                var mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
-            }
-            else
-            {
-                var mapCenter = L.latLng(rides[city].latitude, rides[city].longitude);
-            }
-
-            var locationLatLng = L.latLng(rides[city].latitude, rides[city].longitude);
-
-            var marker = marker = L.marker(locationLatLng).addTo(map);
-
-            map.setView(mapCenter, zoomLevel);
-
-            var dateTime = new Date(rides[city].dateTime);
-
-            var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
-            popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + this.formatDate(dateTime) + '</span>';
-            popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + this.formatTime(dateTime) + '</span>';
-            popupContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + rides[city].location + '</span>';
-
-            marker.bindPopup(popupContent);
-
-            if (showPopup)
-            {
-                marker.openPopup();
-            }
+            this.displayRide(rides[city]);
         }
     }
+};
+
+Map.prototype.getMapLatLng = function()
+{
+    var mapLatLng;
+
+    if (window.mapCenterLatitude !== undefined && window.mapCenterLongitude !== undefined)
+    {
+        mapLatLng = L.latLng(mapCenterLatitude, mapCenterLongitude);
+    }
+    else
+    {
+        mapLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+    }
+
+    return mapLatLng;
 };
 
 Map.prototype.formatTime = function(dateTime)
@@ -102,3 +94,39 @@ Map.prototype.formatDate = function(dateTime)
         (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
         (dateTime.getFullYear());
 };
+
+Map.prototype.createMarker = function(locationLatLng)
+{
+    this.marker = L.marker(locationLatLng).addTo(this.map);
+};
+
+Map.prototype.createPopup = function(dateTime, location)
+{
+    var url = 'https://criticalmass.in/' + citySlug;
+
+    var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
+    popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + this.formatDate(dateTime) + '</span>';
+    popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + this.formatTime(dateTime) + '</span>';
+    popupContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + location + '</span>';
+
+    this.marker.bindPopup(popupContent);
+
+    if (showPopup)
+    {
+        this.marker.openPopup();
+    }
+};
+
+Map.prototype.displayRide = function(ride)
+{
+    this.ride = ride;
+
+    var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+    var mapLatLng = this.getMapLatLng();
+    this.map.setView(mapLatLng, zoomLevel);
+
+    var dateTime = new Date(this.ride.dateTime);
+
+    this.createMarker(locationLatLng);
+    this.createPopup(dateTime, this.ride.location);
+}
