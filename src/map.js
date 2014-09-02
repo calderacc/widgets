@@ -1,5 +1,3 @@
-
-
 window.onload = function()
 {
     $('#criticalmassin-widget-map-container').width(width);
