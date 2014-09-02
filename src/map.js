@@ -1,4 +1,4 @@
 window.onload = function()
 {
-    alert('foo');
-}
+    $('#criticalmassin-widget-map-container').append('<div id="criticalmassin-widget-map"></div>');
+};
