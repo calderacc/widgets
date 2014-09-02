@@ -41,7 +41,9 @@ window.onload = function()
                     var formattedTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
                             (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 
-                    marker.bindPopup('<b>N&auml;chste Tour</b><br />Datum: ' + formattedDate + '<br />Uhrzeit: ' + formattedTime + '<br />Treffpunkt: ' + rides[city].location);
+                    var popupContent = '<b>N&auml;chste Tour</b><br />Datum: ' + formattedDate + '<br />Uhrzeit: ' + formattedTime + '<br />Treffpunkt: ' + rides[city].location;
+
+                    marker.bindPopup(popupContent);
 
                     if (showPopup)
                     {
