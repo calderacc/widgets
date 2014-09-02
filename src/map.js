@@ -19,7 +19,15 @@ window.onload = function()
         context: this,
         success: function(data)
         {
-            
+            var rides = data.rides;
+
+            for (var city in rides)
+            {
+                if (city == citySlug)
+                {
+                    alert(city + ' gefunden');
+                }
+            }
         }
     });
 };
