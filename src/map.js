@@ -17,7 +17,7 @@ window.onload = function()
                 maxZoom: 18,
                 detectRetina: true
             }).addTo(map);
-            
+
             var rides = data.rides;
 
             for (var city in rides)
@@ -28,7 +28,18 @@ window.onload = function()
                     var longitude = rides[city].longitude;
 
                     var marker = marker = L.marker([latitude, longitude]).addTo(map);
+
                     map.setView([latitude, longitude], 13);
+
+                    var dateTime = new Date(rides[city].dateTime);
+
+                    var formattedDateTime = (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
+                        (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr, ' +
+                        (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
+                        (dateTime.getMonth() + 1 < 10 ? '0' + (dateTime.getMonth() + 1) : (dateTime.getMonth() + 1)) + '.' +
+                        (dateTime.getFullYear());
+
+                    marker.bindPopup('<b>N&auml;chste Tour</b><br />' + formattedDateTime).openPopup();
                 }
             }
         }
