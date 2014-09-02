@@ -24,12 +24,11 @@ window.onload = function()
             {
                 if (city == citySlug)
                 {
-                    var latitude = rides[city].latitude;
-                    var longitude = rides[city].longitude;
+                    var mapCenter = L.latLng(rides[city].latitude, rides[city].longitude);
 
-                    var marker = marker = L.marker([latitude, longitude]).addTo(map);
+                    var marker = marker = L.marker(mapCenter).addTo(map);
 
-                    map.setView([latitude, longitude], 13);
+                    map.setView(mapCenter, 13);
 
                     var dateTime = new Date(rides[city].dateTime);
 
