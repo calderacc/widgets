@@ -1,3 +1,4 @@
-/**
- * Created by maltehuebner on 02.09.14.
- */
+window.onload = function()
+{
+    alert('foo');
+}
