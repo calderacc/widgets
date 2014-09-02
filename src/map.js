@@ -25,7 +25,10 @@ window.onload = function()
             {
                 if (city == citySlug)
                 {
-                    alert(city + ' gefunden');
+                    var latitude = rides[city].latitude;
+                    var longitude = rides[city].longitude;
+
+                    var marker = marker = L.marker([latitude, longitude]).addTo(map);
                 }
             }
         }
