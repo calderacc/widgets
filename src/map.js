@@ -1,9 +1,10 @@
 window.onload = function()
 {
+    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
+    $('head').append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
+
     $('#criticalmassin-widget-map-container').width(width);
     $('#criticalmassin-widget-map-container').height(height);
-
-    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
 
     $.ajax({
         type: 'GET',
