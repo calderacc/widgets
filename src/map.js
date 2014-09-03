@@ -3,7 +3,6 @@ Map = function(mapIdentifier, mapOptions)
     this.mapIdentifier = mapIdentifier;
     this.mapOptions = mapOptions;
 
-    this.loadStylesheets();
     this.setMapWidthHeight();
     this.loadRide();
 };
@@ -24,14 +23,6 @@ Map.prototype.getOptionValue = function(optionKey)
 Map.prototype.hasOptionValue = function(optionKey)
 {
     return this.mapOptions[optionKey] !== undefined;
-};
-
-Map.prototype.loadStylesheets = function()
-{
-    var head = $('head');
-
-    head.append('<link rel="stylesheet" type="text/css" href="../src/css/map.css" />');
-    head.append('<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />');
 };
 
 Map.prototype.setMapWidthHeight = function()
