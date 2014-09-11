@@ -15,16 +15,34 @@ Map.prototype.marker = null;
 Map.prototype.tileLayer = null;
 Map.prototype.ride = null;
 
+/**
+ * Liefert anhand des übergebenen Schlüssels einen Wert aus den vom Anwender
+ * festgelegten Optionen zurück, die in mapOptions gespeichert sind.
+ *
+ * @param String optionKey Schlüssel zur Identifikation des gesuchten Wertes
+ * @returns String Wert der gesuchten Option
+ */
 Map.prototype.getOptionValue = function(optionKey)
 {
     return this.mapOptions[optionKey];
 };
 
+/**
+ * Gibt anhand des gesuchten Schlüssels zurück, ob der Anwender des Widgets
+ * einen bestimmten Wert in den Optionen vereinbart hat.
+ *
+ * @param String optionKey Schlüssel zur Identifikation des gesuchten Wertes
+ * @returns Boolean true, falls der Schlüssel gefunden wurde
+ */
 Map.prototype.hasOptionValue = function(optionKey)
 {
     return this.mapOptions[optionKey] !== undefined;
 };
 
+/**
+ * Legt anhand der vom Anwender festgelegten Optionen die Breite und Höhe des
+ * Karten-Containers fest.
+ */
 Map.prototype.setMapWidthHeight = function()
 {
     var mapContainer = $('#' + this.mapIdentifier);
@@ -33,6 +51,14 @@ Map.prototype.setMapWidthHeight = function()
     mapContainer.height(this.getOptionValue('height'));
 };
 
+/**
+ * Führt eine AJAX-Anfrage aus, um die Daten der aktuellen Touren vom Server zu
+ * laden. Anschließend wird processRide() aufgerufen.
+ *
+ * @todo Hier wird noch die alte API-Schnittstelle befragt. In Kürze wird es
+ * ein Update geben, das einen anderen Endpunkt anbietet, an dem tatsächlich
+ * nur die benötigten Daten ausgeliefert werden.
+ */
 Map.prototype.loadRide = function()
 {
     $.ajax({
@@ -48,6 +74,13 @@ Map.prototype.loadRide = function()
     });
 };
 
+/**
+ * Fährt mit der Anzeige der Karte fort. Zuerst wird eine Karte erstellt, dann
+ * ein TileLayer hinzugefügt, schließlich wird aus dem ganzen Wust der AJAX-
+ * Antwort die gesuchte Tour herausgesucht.
+ *
+ * @param Object data AJAX-Antwort der API
+ */
 Map.prototype.processRide = function(data)
 {
     this.createMap();
@@ -64,6 +97,14 @@ Map.prototype.processRide = function(data)
     }
 };
 
+/**
+ * Berechnet den Mittelpunkt der Karte. Der Anwender kann optional einen
+ * eigenen Kartenmittelpunkt angeben, um die Darstellung in bestimmten Städten
+ * zu optimieren. Falls er keinen eigenen Mittelpunkt angegeben hat, wird der
+ * Startpunkt der nächsten Tour genutzt.
+ *
+ * @returns L.latLng mit den berechneten Koordinaten
+ */
 Map.prototype.getMapLatLng = function()
 {
     var mapLatLng;
@@ -80,12 +121,24 @@ Map.prototype.getMapLatLng = function()
     return mapLatLng;
 };
 
+/**
+ * Formatiert die Zeit-Angabe vernünftig.
+ *
+ * @param DateTime dateTime Zu formatierende Zeit-Angabe
+ * @returns String Formatierte Zeit-Angabe
+ */
 Map.prototype.formatTime = function(dateTime)
 {
     return (dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours()) + '.' +
         (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes()) + ' Uhr';
 };
 
+/**
+ * Formatiert die Datums-Angabe vernünftig.
+ *
+ * @param DateTime dateTime Zu formatierende Datums-Angabe
+ * @returns String Formatierte Datums-Angabe
+ */
 Map.prototype.formatDate = function(dateTime)
 {
     return (dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate())  + '.' +
@@ -93,6 +146,11 @@ Map.prototype.formatDate = function(dateTime)
         (dateTime.getFullYear());
 };
 
+/**
+ * Endlich passiert mal wieder was. In dieser Funktion wird die Leaflet-Karte
+ * erstellt, die hier einem Container zugeordnet wird. Aus den Optionen wird
+ * außerdem herausgelesen, ob ein ZoomControl angezeigt werden soll.
+ */
 Map.prototype.createMap = function()
 {
     var mapOptions = [];
@@ -101,6 +159,9 @@ Map.prototype.createMap = function()
     this.map = L.map(this.mapIdentifier, mapOptions);
 };
 
+/**
+ * Erzeugt einen TileLayer und fügt ihn der Karte hinzu.
+ */
 Map.prototype.createTileLayer = function()
 {
     this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -110,6 +171,10 @@ Map.prototype.createTileLayer = function()
     }).addTo(this.map);
 };
 
+/**
+ * Erstellt den Marker für den Treffpunkt
+ * @param locationLatLng
+ */
 Map.prototype.createMarker = function(locationLatLng)
 {
     this.marker = L.marker(locationLatLng).addTo(this.map);
