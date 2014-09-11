@@ -1,6 +1,9 @@
-window.onload = function()
+TextWidget = function(widgetIdentifier, options)
 {
-    $('head').append('<link rel="stylesheet" type="text/css" href="../src/css/text.css" />');
+    this.widgetIdentifier = widgetIdentifier;
+    this.options = options;
+
+    this.citySlug = options['citySlug'];
 
     $.ajax({
         type: 'GET',
@@ -14,9 +17,9 @@ window.onload = function()
 
             for (var city in rides)
             {
-                if (city == citySlug)
+                if (city == this.citySlug)
                 {
-                    var url = 'https://criticalmass.in/' + citySlug;
+                    var url = 'https://criticalmass.in/' + this.citySlug;
 
                     var dateTime = new Date(rides[city].dateTime);
 
@@ -32,7 +35,7 @@ window.onload = function()
                     textContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + formattedTime + '</span>';
                     textContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + rides[city].location + '</span>';
 
-                    $('#criticalmassin-widget-text-container').html(textContent);
+                    $('#' + this.widgetIdentifier).html(textContent);
                 }
             }
         }
