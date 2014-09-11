@@ -1,13 +1,19 @@
 <html>
     <head>
         <title>Text Widget Example</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://widgets.criticalmass.in/css/text.css" />
     </head>
     <body>
+        <div id="criticalmassin-widget-text-container">FOOBAR</div>
+        <script src="../src/js/text.js"></script>
         <script>
-            var citySlug = 'berlin';
+            var options = {
+                citySlug: 'berlin'
+            };
+
+            var widget = new TextWidget('criticalmassin-widget-text-container', options);
         </script>
-        <script src="https://widgets.criticalmass.in/js/text.js"></script>
-        <div id="criticalmassin-widget-text-container"></div>
+
     </body>
 </html>
