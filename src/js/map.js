@@ -104,9 +104,11 @@ Map.prototype.getMapLatLng = function()
     {
         mapLatLng = L.latLng(this.getOptionValue('mapCenterLatitude'), this.getOptionValue('mapCenterLongitude'));
     }
-    else
+    else if (this.ride.haslocation)
     {
         mapLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+    } else {
+        mapLatLng = L.latLng(this.ride.city.latitude, this.ride.city.longitude);
     }
 
     return mapLatLng;
@@ -164,18 +166,28 @@ Map.prototype.createTileLayer = function()
 
 /**
  * Erstellt den Marker für den Treffpunkt
- * @param locationLatLng
  */
 Map.prototype.createMarker = function()
 {
-    var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+    if (this.ride.haslocation == true) {
+        var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
 
-    var redMarker = L.ExtraMarkers.icon({
-        icon: 'fa-bicycle',
-        markerColor: 'red',
-        shape: 'circle',
-        prefix: 'fa'
-    });
+        var redMarker = L.ExtraMarkers.icon({
+            icon: 'fa-bicycle',
+            markerColor: 'red',
+            shape: 'circle',
+            prefix: 'fa'
+        });
+    } else {
+        var locationLatLng = L.latLng(this.ride.city.latitude, this.ride.city.longitude);
+
+        var redMarker = L.ExtraMarkers.icon({
+            icon: 'fa-university',
+            markerColor: 'red',
+            shape: 'circle',
+            prefix: 'fa'
+        });
+    }
 
     this.marker = L.marker(locationLatLng, { icon: redMarker }).addTo(this.map);
 };
@@ -184,7 +196,13 @@ Map.prototype.createPopup = function()
 {
     var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug');
     var dateTime = new Date(this.ride.timestamp * 1000);
-    var location = this.ride.location;
+    var location;
+
+    if (this.ride.haslocation) {
+        location = this.ride.location;
+    } else {
+        location = '<em>noch nicht bekannt</em>';
+    }
 
     var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
     popupContent += '<br />';
@@ -205,7 +223,7 @@ Map.prototype.createPopup = function()
 Map.prototype.displayRide = function(rideData)
 {
     this.ride = rideData;
-    
+
     var mapLatLng = this.getMapLatLng();
     var zoomLevel = this.hasOptionValue('zoomLevel') ? this.getOptionValue('zoomLevel') : 13;
 
