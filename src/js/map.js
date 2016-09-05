@@ -79,22 +79,13 @@ Map.prototype.loadRide = function()
  * ein TileLayer hinzugefügt, schließlich wird aus dem ganzen Wust der AJAX-
  * Antwort die gesuchte Tour herausgesucht.
  *
- * @param Object data AJAX-Antwort der API
+ * @param JSON rideData JSON-Antwort der API
  */
-Map.prototype.processRide = function(data)
+Map.prototype.processRide = function(rideData)
 {
     this.createMap();
     this.createTileLayer();
-
-    var rides = data.rides;
-
-    for (var city in rides)
-    {
-        if (city == this.getOptionValue('citySlug'))
-        {
-            this.displayRide(rides[city]);
-        }
-    }
+    this.displayRide(rideData);
 };
 
 /**
@@ -200,9 +191,9 @@ Map.prototype.createPopup = function(dateTime, location)
     }
 };
 
-Map.prototype.displayRide = function(ride)
+Map.prototype.displayRide = function(rideData)
 {
-    this.ride = ride;
+    this.ride = rideData;
 
     var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
     var mapLatLng = this.getMapLatLng();
