@@ -61,10 +61,12 @@ Map.prototype.setMapWidthHeight = function()
  */
 Map.prototype.loadRide = function()
 {
+    var url = 'http://criticalmass.cm/app_dev.php/rest/' + this.getOptionValue('citySlug') + '/' + this.getOptionValue('rideDate');
+
     $.ajax({
         type: 'GET',
         async: false,
-        url: 'https://criticalmass.in/api/ride/getcurrent',
+        url: url,
         cache: false,
         context: this,
         success: function(data)
@@ -194,7 +196,8 @@ Map.prototype.createMarker = function()
 
 Map.prototype.createPopup = function()
 {
-    var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug');
+    var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug') + '/' + this.getOptionValue('rideDate');
+
     var dateTime = new Date(this.ride.timestamp * 1000);
     var location;
 
@@ -231,4 +234,4 @@ Map.prototype.displayRide = function(rideData)
 
     this.createMarker();
     this.createPopup();
-}
+};
