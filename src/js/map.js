@@ -185,8 +185,11 @@ Map.prototype.createPopup = function(dateTime, location)
     var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug');
 
     var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
+    popupContent += '<br />';
     popupContent += '<span id="criticalmassin-next-tour-date">Datum: ' + this.formatDate(dateTime) + '</span>';
+    popupContent += '<br />';
     popupContent += '<span id="criticalmassin-next-tour-time">Uhrzeit: ' + this.formatTime(dateTime) + '</span>';
+    popupContent += '<br />';
     popupContent += '<span id="criticalmassin-next-tour-location">Treffpunkt: ' + location + '</span>';
 
     this.marker.bindPopup(popupContent);
