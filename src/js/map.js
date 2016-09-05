@@ -166,21 +166,25 @@ Map.prototype.createTileLayer = function()
  * Erstellt den Marker für den Treffpunkt
  * @param locationLatLng
  */
-Map.prototype.createMarker = function(locationLatLng)
+Map.prototype.createMarker = function()
 {
+    var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+
     var redMarker = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
         markerColor: 'red',
         shape: 'circle',
         prefix: 'fa'
     });
-    
+
     this.marker = L.marker(locationLatLng, { icon: redMarker }).addTo(this.map);
 };
 
-Map.prototype.createPopup = function(dateTime, location)
+Map.prototype.createPopup = function()
 {
     var url = 'https://criticalmass.in/' + this.getOptionValue('citySlug');
+    var dateTime = new Date(this.ride.timestamp * 1000);
+    var location = this.ride.location;
 
     var popupContent = '<a href="' + url + '" id="criticalmassin-next-tour-headline">N&auml;chste Tour:</a>';
     popupContent += '<br />';
@@ -201,15 +205,12 @@ Map.prototype.createPopup = function(dateTime, location)
 Map.prototype.displayRide = function(rideData)
 {
     this.ride = rideData;
-
-    var locationLatLng = L.latLng(this.ride.latitude, this.ride.longitude);
+    
     var mapLatLng = this.getMapLatLng();
     var zoomLevel = this.hasOptionValue('zoomLevel') ? this.getOptionValue('zoomLevel') : 13;
 
     this.map.setView(mapLatLng, zoomLevel);
 
-    var dateTime = new Date(this.ride.timestamp * 1000);
-
-    this.createMarker(locationLatLng);
-    this.createPopup(dateTime, this.ride.location);
+    this.createMarker();
+    this.createPopup();
 }
