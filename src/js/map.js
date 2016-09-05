@@ -168,7 +168,14 @@ Map.prototype.createTileLayer = function()
  */
 Map.prototype.createMarker = function(locationLatLng)
 {
-    this.marker = L.marker(locationLatLng).addTo(this.map);
+    var redMarker = L.ExtraMarkers.icon({
+        icon: 'fa-bicycle',
+        markerColor: 'red',
+        shape: 'circle',
+        prefix: 'fa'
+    });
+    
+    this.marker = L.marker(locationLatLng, { icon: redMarker }).addTo(this.map);
 };
 
 Map.prototype.createPopup = function(dateTime, location)
