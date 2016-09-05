@@ -1,19 +1,23 @@
 <html>
     <head>
         <title>Map Widget Example</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://widgets.criticalmass.in/css/map.css" />
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <script src="https://criticalmass.in/bundles/calderacriticalmasssite/js/external/jquery/jquery-3.1.0.min.js"></script>
+        <script src="https://criticalmass.in/bundles/calderacriticalmasssite/js/external/leaflet/leaflet.js"></script>
+        <script src="https://criticalmass.in/bundles/calderacriticalmasssite/js/external/leaflet/ExtraMarkers.js"></script>
+
+        <link rel="stylesheet" href="http://criticalmass.cm/bundles/calderacriticalmasssite/css/external/leaflet/leaflet-0.7.7.css" />
+        <link rel="stylesheet" href="http://criticalmass.cm/bundles/calderacriticalmasssite/css/external/leaflet/extramarkers.css" />
+        <link rel="stylesheet" href="http://criticalmass.cm/bundles/calderacriticalmasssite/css/external/fontawesome/fa-4.6.3.css" />
     </head>
     <body>
         <div id="criticalmassin-widget-map-container"></div>
-        <script src="https://widgets.criticalmass.in/js/map.js"></script>
+        <script src="file:///Users/maltehuebner/Documents/calderacc/widgets/src/js/map.js"></script>
         <script>
             var mapOptions = {
                 width: '500px',
                 height: '500px',
-                citySlug: 'berlin'
+                citySlug: 'hamburg',
+                rideDate: 'current'
             };
 
             var map = new Map('criticalmassin-widget-map-container', mapOptions);
