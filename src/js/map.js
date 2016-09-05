@@ -20,7 +20,7 @@ Map.prototype.ride = null;
  * festgelegten Optionen zurück, die in mapOptions gespeichert sind.
  *
  * @param String optionKey Schlüssel zur Identifikation des gesuchten Wertes
- * @returns String Wert der gesuchten Option
+ * @return String Wert der gesuchten Option
  */
 Map.prototype.getOptionValue = function(optionKey)
 {
@@ -32,7 +32,7 @@ Map.prototype.getOptionValue = function(optionKey)
  * einen bestimmten Wert in den Optionen vereinbart hat.
  *
  * @param String optionKey Schlüssel zur Identifikation des gesuchten Wertes
- * @returns Boolean true, falls der Schlüssel gefunden wurde
+ * @return Boolean true, falls der Schlüssel gefunden wurde
  */
 Map.prototype.hasOptionValue = function(optionKey)
 {
@@ -103,7 +103,7 @@ Map.prototype.processRide = function(data)
  * zu optimieren. Falls er keinen eigenen Mittelpunkt angegeben hat, wird der
  * Startpunkt der nächsten Tour genutzt.
  *
- * @returns L.latLng mit den berechneten Koordinaten
+ * @return L.latLng mit den berechneten Koordinaten
  */
 Map.prototype.getMapLatLng = function()
 {
@@ -125,7 +125,7 @@ Map.prototype.getMapLatLng = function()
  * Formatiert die Zeit-Angabe vernünftig.
  *
  * @param DateTime dateTime Zu formatierende Zeit-Angabe
- * @returns String Formatierte Zeit-Angabe
+ * @return String Formatierte Zeit-Angabe
  */
 Map.prototype.formatTime = function(dateTime)
 {
@@ -137,7 +137,7 @@ Map.prototype.formatTime = function(dateTime)
  * Formatiert die Datums-Angabe vernünftig.
  *
  * @param DateTime dateTime Zu formatierende Datums-Angabe
- * @returns String Formatierte Datums-Angabe
+ * @return String Formatierte Datums-Angabe
  */
 Map.prototype.formatDate = function(dateTime)
 {
