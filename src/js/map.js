@@ -201,7 +201,7 @@ Map.prototype.displayRide = function(rideData)
 
     this.map.setView(mapLatLng, zoomLevel);
 
-    var dateTime = new Date(this.ride.dateTime);
+    var dateTime = new Date(this.ride.timestamp * 1000);
 
     this.createMarker(locationLatLng);
     this.createPopup(dateTime, this.ride.location);
